@@ -1,24 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import { Container, Typography, Grow, Grid } from "@mui/material";
+import { imageMemory } from "./images/images";
+import Posts from "./components/Posts/Posts";
+import Form from "./components/Form/Form";
+import useStyles from "./styles"; 
+import AppBar from './components/appbarMain/AppBarMain'
+import {useSelector} from 'react-redux'
 
 function App() {
+  const classes = useStyles();
+  const loginStatus =useSelector((state)=>state.posts.loginDetail.loginStatus) 
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Container maxWidth="lg">
+        
+      <AppBar/>
+        <Grow in>
+          <Container>
+            <Grid
+              container
+              justify="space-between"
+              alignItems="stretch"
+              spacing={4}
+            >
+              <Grid item sm={12} lg={4}>
+                {loginStatus === false  ? <h2 style={{color:'red'}}>You need to login first </h2> : <Form />}
+              </Grid>
+              <Grid item sm={12} lg={7}>
+                <Posts />
+              </Grid>
+            </Grid>
+          </Container>
+        </Grow>
+      </Container>
+    </>
   );
 }
 
